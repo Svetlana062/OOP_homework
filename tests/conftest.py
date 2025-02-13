@@ -6,6 +6,7 @@ from src.product import Product
 
 @pytest.fixture
 def first_category():
+    """Фикстура для теста класса Category"""
     return Category(
         name="Смартфоны",
         description="Смартфоны, как средство коммуникации",
@@ -19,6 +20,7 @@ def first_category():
 
 @pytest.fixture
 def second_category():
+    """Фикстура для теста класса Category"""
     return Category(
         name="Телевизоры",
         description="Современный телевизор",
@@ -33,4 +35,27 @@ def second_category():
 
 @pytest.fixture
 def products():
+    """Фикстура для теста класса Products"""
     return Product("Смартфоны", "Смартфоны, как средство коммуникации", 24000, 18)
+
+
+@pytest.fixture
+def mock_data():
+    """Фикстура для проверки чтения файлов json"""
+    return [
+        {
+            "name": "Category 1",
+            "description": "First category",
+            "products": [
+                {"name": "Product 1", "description": "Description 1", "price": 10.0, "quantity": 5},
+                {"name": "Product 2", "description": "Description 2", "price": 20.0, "quantity": 3}
+            ]
+        },
+        {
+            "name": "Category 2",
+            "description": "Second category",
+            "products": [
+                {"name": "Product 3", "description": "Description 3", "price": 30.0, "quantity": 2}
+            ]
+        }
+    ]
