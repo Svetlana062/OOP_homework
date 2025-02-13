@@ -1,7 +1,7 @@
 import os
 import unittest
-
 from unittest.mock import mock_open, patch
+
 from src.category import Category
 from src.product import Product
 from src.utils import create_objects_from_json, read_json
@@ -37,7 +37,7 @@ class TestReadJsonFunction(unittest.TestCase):
 
 def test_create_objects_from_json(mock_data):
     """Тест, который проверяет, как функция create_objects_from_json обрабатывает данные, переданные в виде JSON"""
-    result = create_objects_from_json(mock_data) # Вызов функции
+    result = create_objects_from_json(mock_data)  # Вызов функции
 
     # Проверка результата
     assert len(result) == 2  # Должно быть 2 категории

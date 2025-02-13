@@ -48,14 +48,12 @@ def mock_data():
             "description": "First category",
             "products": [
                 {"name": "Product 1", "description": "Description 1", "price": 10.0, "quantity": 5},
-                {"name": "Product 2", "description": "Description 2", "price": 20.0, "quantity": 3}
-            ]
+                {"name": "Product 2", "description": "Description 2", "price": 20.0, "quantity": 3},
+            ],
         },
         {
             "name": "Category 2",
             "description": "Second category",
-            "products": [
-                {"name": "Product 3", "description": "Description 3", "price": 30.0, "quantity": 2}
-            ]
-        }
+            "products": [{"name": "Product 3", "description": "Description 3", "price": 30.0, "quantity": 2}],
+        },
     ]
