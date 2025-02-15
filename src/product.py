@@ -5,7 +5,8 @@ class Product:
     description: str  # описание
     price: float  # цена
     quantity: int  # количество в наличии
-    existing_products = []  # существующие продукты
+
+    existing_products = []  # имеющиеся продукты
 
     def __init__(self, name, description, price, quantity):
         self.name = name
@@ -21,17 +22,16 @@ class Product:
         price = product_info.get("price")
         quantity = product_info.get("quantity")
 
-        # Проверка на наличие существующего товара
-        for product in cls.existing_products:
+        for product in cls.existing_products:  # Проверка на наличие существующего товара
             if product.name == name:
-                # Обновляем количество и цену, если товар уже существует
-                product.quantity += quantity
+                product.quantity += quantity  # Обновляем количество и цену, если товар уже существует
                 product.price = max(product.price, price)  # Оставляем более высокую цену
                 print(f"Товар '{name}' обновлен. Новое количество: {product.quantity}, Новая цена: {product.price}.")
                 return product  # Возвращаем обновленный продукт
 
         # Если товара нет, создаем новый
         new_product = cls(name, description, price, quantity)
+        cls.existing_products.append(new_product)  # Добавляем новый продукт в список существующих
         print(f"Создан новый товар: {name}, Цена: {price}, Количество: {quantity}.")
         return new_product
 
