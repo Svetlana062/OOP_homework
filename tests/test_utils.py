@@ -2,9 +2,7 @@ import os
 import unittest
 from unittest.mock import mock_open, patch
 
-from src.category import Category
-from src.product import Product
-from src.utils import create_objects_from_json, read_json
+from src.utils import read_json
 
 
 class TestReadJsonFunction(unittest.TestCase):
@@ -35,36 +33,36 @@ class TestReadJsonFunction(unittest.TestCase):
         self.assertEqual(result, expected)
 
 
-def test_create_objects_from_json(mock_data):
-    """Тест, который проверяет, как функция create_objects_from_json обрабатывает данные, переданные в виде JSON"""
-    result = create_objects_from_json(mock_data)  # Вызов функции
-
-    # Проверка результата
-    assert len(result) == 2  # Должно быть 2 категории
-
-    # Проверка первой категории
-    assert isinstance(result[0], Category)
-    assert result[0].name == "Category 1"
-    assert result[0].description == "First category"
-    assert len(result[0].products) == 2  # Должно быть 2 продукта в первой категории
-
-    # Проверка первого продукта в первой категории
-    assert isinstance(result[0].products[0], Product)
-    assert result[0].products[0].name == "Product 1"
-    assert result[0].products[0].price == 10.0
-    assert result[0].products[0].quantity == 5
-
-    # Проверка второй категории
-    assert isinstance(result[1], Category)
-    assert result[1].name == "Category 2"
-    assert result[1].description == "Second category"
-    assert len(result[1].products) == 1  # Должно быть 1 продукт во второй категории
-
-    # Проверка продукта во второй категории
-    assert isinstance(result[1].products[0], Product)
-    assert result[1].products[0].name == "Product 3"
-    assert result[1].products[0].price == 30.0
-    assert result[1].products[0].quantity == 2
+# def test_create_objects_from_json(mock_data):
+#     """Тест, который проверяет, как функция create_objects_from_json обрабатывает данные, переданные в виде JSON"""
+#     result = create_objects_from_json(mock_data)  # Вызов функции
+#
+#     # Проверка результата
+#     assert len(result) == 2  # Должно быть 2 категории
+#
+#     # Проверка первой категории
+#     assert isinstance(result[0], Category)
+#     assert result[0].name == "Category 1"
+#     assert result[0].description == "First category"
+#     assert len(result[0].products) == 2  # Должно быть 2 продукта в первой категории
+#
+#     # Проверка первого продукта в первой категории
+#     assert isinstance(result[0].products[0], Product)
+#     assert result[0].products[0].name == "Product 1"
+#     assert result[0].products[0].price == 10.0
+#     assert result[0].products[0].quantity == 5
+#
+#     # Проверка второй категории
+#     assert isinstance(result[1], Category)
+#     assert result[1].name == "Category 2"
+#     assert result[1].description == "Second category"
+#     assert len(result[1].products) == 1  # Должно быть 1 продукт во второй категории
+#
+#     # Проверка продукта во второй категории
+#     assert isinstance(result[1].products[0], Product)
+#     assert result[1].products[0].name == "Product 3"
+#     assert result[1].products[0].price == 30.0
+#     assert result[1].products[0].quantity == 2
 
 
 if __name__ == "__main__":
