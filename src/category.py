@@ -1,3 +1,6 @@
+from src.product import Product
+
+
 class Category:
     """Класс для категории"""
 
@@ -11,6 +14,20 @@ class Category:
     def __init__(self, name, description, products):
         self.name = name
         self.description = description
-        self.products = products
+        self.__products = []  # Приватный атрибут для хранения списка товаров
         Category.category_count += 1
-        Category.product_count += len(products) if products else 0
+
+    def add_product(self, product: Product):
+        """Добавляет продукт в категорию, если это объект класса Product."""
+        if isinstance(product, Product):  # Проверяем, что передан объект класса Product
+            self.__products.append(product)
+            Category.product_count += 1
+        else:
+            raise ValueError("Передан неверный тип. Ожидался объект класса Product.")
+
+    @property
+    def products(self):
+        """Геттер для просмотра списка товаров в виде строк."""
+        return "\n".join(
+            [f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт." for product in self.__products]
+        )
