@@ -75,5 +75,44 @@ def test_price_setter_confirmation():
         assert previous_price == 100.0  # Проверяем, что предыдущая цена была 100.0
 
 
+def test_price_setter_rejection():
+    """Проверяем, что цена не изменяется, если пользователь отказывается."""
+    product_info = {
+        "name": "Товар 1",
+        "description": "Описание товара 1",
+        "price": 100.0,
+        "quantity": 5,
+    }
+
+    product = Product.new_product(product_info)
+    previous_price = product.price  # Сохраняем предыдущую цену
+
+    with patch("builtins.input", return_value="n"):  # Имитация выбора 'n' (No)
+        product.price = 80.0  # Пытаемся понизить цену
+        assert product.price == previous_price  # Цена не должна измениться
+
+
+def test_price_setter_invalid():
+    """Проверяем установку некорректной (отрицательной) цены."""
+    product_info = {
+        "name": "Товар 1",
+        "description": "Описание товара 1",
+        "price": 100.0,
+        "quantity": 5,
+    }
+
+    product = Product.new_product(product_info)
+
+    with patch("builtins.print") as mock_print:
+        product.price = -100.0  # Пытаемся установить отрицательную цену
+        mock_print.assert_called_with("Цена не должна быть нулевая или отрицательная")
+
+
+def test_string_representation(product_1):
+    """Проверяем строковое представление продукта."""
+    expected_str = "Смартфоны, 24000 руб. Остаток: 18 шт."
+    assert str(product_1) == expected_str
+
+
 if __name__ == "__main__":
     pytest.main()
