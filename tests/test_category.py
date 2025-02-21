@@ -41,5 +41,27 @@ class TestCategory(unittest.TestCase):
         self.assertEqual(self.category.products, expected_output)
 
 
+def test_category_str(first_category):
+    """Тестируем строковое представление категории."""
+    expected_str = "Смартфоны, количество продуктов: 3 шт."
+    assert str(first_category) == expected_str
+
+
+def test_category_sum(first_category, second_category):
+    """Тестируем сложение стоимости продуктов из двух категорий."""
+    total_cost = first_category + second_category
+    expected_cost = (
+        (24000 * 18) + (90000 * 13) + (36000 * 9) + (124000 * 18) + (90000 * 13) + (36000 * 9) + (34000 * 24)
+    )
+    assert total_cost == expected_cost
+
+
+def test_category_iter(first_category):
+    """Тестируем итерацию по продуктам категории."""
+    products = [product for product in first_category]
+    assert len(products) == 3  # Должно быть 3 продукта
+    assert all(product in first_category.get_products for product in products)  # Все продукты должны быть в категории
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -15,7 +15,7 @@ class Category:
     def __init__(self, name, description, __products=None):
         self.name = name
         self.description = description
-        self.__products = __products if __products is not None else []  # Инициализация списка продуктов
+        self.__products = []  # Инициализация списка продуктов
         Category.category_count += 1
         Category.product_count += len(self.__products)  # Увеличиваем счетчик продуктов на количество переданных
 
