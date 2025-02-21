@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from src.category import Category
@@ -10,7 +12,6 @@ def first_category():
     category = Category(
         name="Смартфоны",
         description="Смартфоны, как средство коммуникации",
-        products=[],  # Передаем пустой список продуктов
     )
     category.add_product(Product("Samsung Galaxy C23", "256GB, Серый цвет, 200MP камера", 24000, 18))
     category.add_product(Product("Iphone 16", "512GB, Gray space", 90000, 13))
@@ -21,9 +22,7 @@ def first_category():
 @pytest.fixture
 def second_category():
     """Фикстура для теста класса Category, категория "Телевизоры"."""
-    category = Category(
-        name="Телевизоры", description="Современный телевизор", products=[]  # Передаем пустой список продуктов
-    )
+    category = Category(name="Телевизоры", description="Современный телевизор")
     category.add_product(Product('55" QLED 4K', "Фоновая подсветка", 124000, 18))
     category.add_product(Product("LG 32LM576BPL", "Широкий формат", 90000, 13))
     category.add_product(Product("Xiaomi TV S Mini LED 55", "Изогнутый экран", 36000, 9))
@@ -40,7 +39,7 @@ def product_1():
 @pytest.fixture
 def category_with_products():
     """Фикстура для теста с продуктами."""
-    category = Category(name="Тестовая категория", description="Описание категории", products=[])
+    category = Category(name="Тестовая категория", description="Описание категории", __products=[])
     product1 = Product.new_product(
         {
             "name": "Телефон",
@@ -68,21 +67,30 @@ def clear_existing_products():
     Product.existing_products.clear()
 
 
-# @pytest.fixture
-# def mock_data():
-#     """Фикстура для проверки чтения файлов json"""
-#     return [
-#         {
-#             "name": "Category 1",
-#             "description": "First category",
-#             "products": [
-#                 {"name": "Product 1", "description": "Description 1", "price": 10.0, "quantity": 5},
-#                 {"name": "Product 2", "description": "Description 2", "price": 20.0, "quantity": 3},
-#             ],
-#         },
-#         {
-#             "name": "Category 2",
-#             "description": "Second category",
-#             "products": [{"name": "Product 3", "description": "Description 3", "price": 30.0, "quantity": 2}],
-#         },
-#     ]
+@pytest.fixture
+def mock_json_file(tmp_path, mock_data):
+    """Фикстура для создания временного JSON-файла с тестовыми данными."""
+    json_file = tmp_path / "test_data.json"
+    with open(json_file, "w", encoding="UTF-8") as f:
+        json.dump(mock_data, f)
+    return json_file
+
+
+@pytest.fixture
+def mock_data():
+    """Фикстура для проверки чтения файлов json"""
+    return [
+        {
+            "name": "Category 1",
+            "description": "First category",
+            "products": [
+                {"name": "Product 1", "description": "Description 1", "price": 10.0, "quantity": 5},
+                {"name": "Product 2", "description": "Description 2", "price": 20.0, "quantity": 3},
+            ],
+        },
+        {
+            "name": "Category 2",
+            "description": "Second category",
+            "products": [{"name": "Product 3", "description": "Description 3", "price": 30.0, "quantity": 2}],
+        },
+    ]
