@@ -22,11 +22,12 @@ def create_objects_from_json(data: dict) -> list:
     """Создание объектов из json-файлов"""
     categories = []
     for category_data in data:
-        products = []
+        # Создаем объект Category без передачи products
+        category = Category(name=category_data["name"], description=category_data["description"])
         for product_data in category_data["products"]:
-            products.append(Product(**product_data))
-        category_data["products"] = products
-        categories.append(Category(**category_data))
+            product = Product(**product_data)  # Создаем объект Product
+            category.add_product(product)  # Добавляем продукт в категорию
+        categories.append(category)
 
     return categories
 

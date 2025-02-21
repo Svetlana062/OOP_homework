@@ -2,7 +2,7 @@ import os
 import unittest
 from unittest.mock import mock_open, patch
 
-from src.utils import read_json
+from src.utils import create_objects_from_json, read_json
 
 
 class TestReadJsonFunction(unittest.TestCase):
@@ -20,7 +20,7 @@ class TestReadJsonFunction(unittest.TestCase):
 
     @patch("builtins.open", side_effect=FileNotFoundError)
     def test_read_json_file_not_found(self, mock_data):
-        """При попытке открыть файл будет вызвано исключение FileNotFoundError"""
+        """Тест на обработку отсутствующего файла."""
         result = read_json("dummy_path.json")
         expected = {}
         self.assertEqual(result, expected)
@@ -33,36 +33,37 @@ class TestReadJsonFunction(unittest.TestCase):
         self.assertEqual(result, expected)
 
 
-# def test_create_objects_from_json(mock_data):
-#     """Тест, который проверяет, как функция create_objects_from_json обрабатывает данные, переданные в виде JSON"""
-#     result = create_objects_from_json(mock_data)  # Вызов функции
-#
-#     # Проверка результата
-#     assert len(result) == 2  # Должно быть 2 категории
-#
-#     # Проверка первой категории
-#     assert isinstance(result[0], Category)
-#     assert result[0].name == "Category 1"
-#     assert result[0].description == "First category"
-#     assert len(result[0].products) == 2  # Должно быть 2 продукта в первой категории
-#
-#     # Проверка первого продукта в первой категории
-#     assert isinstance(result[0].products[0], Product)
-#     assert result[0].products[0].name == "Product 1"
-#     assert result[0].products[0].price == 10.0
-#     assert result[0].products[0].quantity == 5
-#
-#     # Проверка второй категории
-#     assert isinstance(result[1], Category)
-#     assert result[1].name == "Category 2"
-#     assert result[1].description == "Second category"
-#     assert len(result[1].products) == 1  # Должно быть 1 продукт во второй категории
-#
-#     # Проверка продукта во второй категории
-#     assert isinstance(result[1].products[0], Product)
-#     assert result[1].products[0].name == "Product 3"
-#     assert result[1].products[0].price == 30.0
-#     assert result[1].products[0].quantity == 2
+def test_read_json_invalid(mock_json_file):
+    """Тест на обработку некорректного JSON-файла."""
+    with open(mock_json_file, "w", encoding="UTF-8") as f:
+        f.write("invalid json")
+
+    data = read_json(mock_json_file)
+    assert data == {}  # Проверяем, что возвращается пустой словарь
+
+
+def test_create_objects_from_json(mock_data):
+    """Тест на создание объектов из JSON-данных."""
+    categories = create_objects_from_json(mock_data)
+
+    assert len(categories) == 2  # Проверяем, что создано 2 категории
+    assert categories[0].name == "Category 1"
+    assert categories[0].description == "First category"
+    assert len(categories[0].products) == 2  # Проверяем, что в первой категории 2 продукта
+    assert categories[0].products[0].name == "Product 1"
+    assert categories[0].products[0].price == 10.0
+
+    assert categories[1].name == "Category 2"
+    assert categories[1].description == "Second category"
+    assert len(categories[1].products) == 1  # Проверяем, что во второй категории 1 продукт
+    assert categories[1].products[0].name == "Product 3"
+    assert categories[1].products[0].price == 30.0
+
+
+def test_create_objects_from_json_empty():
+    """Тест на создание объектов из пустого JSON-данных."""
+    categories = create_objects_from_json([])
+    assert categories == []  # Проверяем, что возвращается пустой список
 
 
 if __name__ == "__main__":
