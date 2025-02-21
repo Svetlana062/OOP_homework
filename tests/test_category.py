@@ -37,9 +37,8 @@ class TestCategory(unittest.TestCase):
         self.category.add_product(product1)
         self.category.add_product(product2)
 
-        expected_output = "Телефон, 500.0 руб. Остаток: 10 шт.\n" "Ноутбук, 1500.0 руб. Остаток: 5 шт."
-        self.assertEqual(self.category.products, expected_output)
-
+        expected_output = "Телефон, 500.0 руб. Остаток: 10 шт.\nНоутбук, 1500.0 руб. Остаток: 5 шт."
+        self.assertEqual(self.category.products_info(), expected_output)
 
 def test_category_str(first_category):
     """Тестируем строковое представление категории."""
