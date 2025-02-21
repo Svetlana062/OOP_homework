@@ -14,6 +14,16 @@ class Product:
         self.__price = price  # Приватный атрибут для цены
         self.quantity = quantity
 
+    def __str__(self):
+        """Строковое отображение для класса Product"""
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        """Сложение"""
+        if isinstance(other, Product):
+            return (self.price * self.quantity) + (other.price * other.quantity)
+        return NotImplemented
+
     @classmethod
     def new_product(cls, product_info: dict):
         """Создает новый продукт или обновляет существующий в зависимости от наличия"""
