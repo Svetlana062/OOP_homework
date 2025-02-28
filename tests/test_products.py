@@ -2,7 +2,9 @@ from unittest.mock import patch
 
 import pytest
 
+from src.lawn_grass import LawnGrass
 from src.product import Product
+from src.smartphone import Smartphone
 
 
 def test_product_init(product_1):
@@ -119,6 +121,36 @@ def test_product_addition(product_1):
     another_product = Product("Ноутбук", "Описание 2", 150000, 5, "Синий")
     total_price = product_1 + another_product
     assert total_price == (product_1.price * product_1.quantity) + (another_product.price * another_product.quantity)
+
+
+def test_product_addition_with_different_types():
+    """Тест сложения продуктов разных типов должен выбросить ошибку TypeError."""
+
+    # Создаем продукты разных типов с требуемыми аргументами
+    electronic_product = Smartphone(
+        name="Смартфон",  # Название
+        description="Современный смартфон",  # Описание
+        price=25000,  # Цена
+        quantity=10,  # Количество
+        efficiency=95.0,  # Производительность
+        model="Модель X",  # Модель
+        memory=128,  # Объем памяти
+        color="черный",  # Цвет
+    )
+
+    plant_product = LawnGrass(
+        name="Газонная трава",  # Название
+        description="Трава для сада",  # Описание
+        price=200,  # Цена
+        quantity=5,  # Количество
+        country="Россия",  # Страна производитель
+        germination_period="14 дней",  # Срок прорастания
+        color="зеленый",  # Цвет
+    )
+
+    # Проверяем, что сложение выбрасывает TypeError
+    with pytest.raises(TypeError):
+        _ = electronic_product + plant_product  # Мы ожидаем исключение, поэтому не сохраняем значение
 
 
 if __name__ == "__main__":

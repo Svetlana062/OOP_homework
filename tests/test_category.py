@@ -56,5 +56,54 @@ class TestCategory(unittest.TestCase):
         self.assertIn(product2, products)  # Ноутбук должен быть в списке
 
 
+class TestCategoryAddition(unittest.TestCase):
+
+    def setUp(self):
+        """Создание необходимых для тестов объектов."""
+        self.product_a1 = Product(
+            name="Смартфон A", description="Описание A", price=50000, quantity=10, color="черный"
+        )
+        self.product_a2 = Product(name="Смартфон B", description="Описание B", price=60000, quantity=5, color="белый")
+
+        self.category_a = Category(name="Смартфоны", description="Категория смартфонов")
+        self.category_b = Category(name="Смартфоны", description="Категория смартфонов")
+
+        # Добавляем продукты в категории
+        self.category_a.add_product(self.product_a1)
+        self.category_a.add_product(self.product_a2)
+
+        self.product_b1 = Product(
+            name="Смартфон C", description="Описание C", price=55000, quantity=3, color="красный"
+        )
+        self.product_b2 = Product(name="Смартфон D", description="Описание D", price=45000, quantity=2, color="синий")
+        self.category_b.add_product(self.product_b1)
+        self.category_b.add_product(self.product_b2)
+
+    def test_add_same_type_categories(self):
+        """Тест на сложение категорий с одинаковыми продуктами."""
+        total_cost = self.category_a + self.category_a
+        expected_cost = (50000 * 10 + 60000 * 5) * 2  # Удвоить стоимость
+        self.assertEqual(total_cost, expected_cost)
+
+    def test_add_different_type_categories(self):
+        """Тест на сложение категорий с разными классами продуктов."""
+        with self.assertRaises(TypeError):
+            self.category_a + "некорректный тип"
+
+    def test_add_empty_categories(self):
+        """Тест на сложение пустых категорий."""
+        empty_category_a = Category(name="Пустая категория A", description="Пустая категория")
+        empty_category_b = Category(name="Пустая категория B", description="Пустая категория")
+        total_cost = empty_category_a + empty_category_b  # Ожидается 0
+        self.assertEqual(total_cost, 0)
+
+    def test_add_categories_with_empty_and_non_empty(self):
+        """Тест на сложение пустой категории с непустой."""
+        empty_category = Category(name="Пустая категория", description="Пустая категория")
+        total_cost = self.category_a + empty_category  # Ожидается стоимость из category_a
+        expected_cost = 50000 * 10 + 60000 * 5
+        self.assertEqual(total_cost, expected_cost)
+
+
 if __name__ == "__main__":
     unittest.main()
