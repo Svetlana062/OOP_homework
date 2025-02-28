@@ -111,12 +111,12 @@ def test_price_setter_invalid():
 def test_product_str(product_1):
     """Тест строки отображения товара."""
     product = product_1
-    assert str(product) == "Смартфоны, 24000 руб. Остаток: 18 шт."
+    assert str(product) == "Смартфоны, 24000 руб. Остаток: 18 шт. Цвет: Синий"
 
 
 def test_product_addition(product_1):
     """Тест на сложение цен и количеств товаров."""
-    another_product = Product("Ноутбук", "Описание 2", 150000, 5)
+    another_product = Product("Ноутбук", "Описание 2", 150000, 5, "Синий")
     total_price = product_1 + another_product
     assert total_price == (product_1.price * product_1.quantity) + (another_product.price * another_product.quantity)
 
