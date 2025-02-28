@@ -17,7 +17,8 @@ class Category:
         self.description = description
         self.__products = []  # Инициализация списка продуктов
         Category.category_count += 1
-        Category.product_count += len(self.__products)  # Увеличиваем счетчик продуктов на количество переданных
+        if __products is not None:
+            Category.product_count += len(self.__products)  # Увеличиваем счетчик продуктов на количество переданных
 
     def __str__(self):
         """Строковое отображение для класса Category"""
@@ -37,12 +38,12 @@ class Category:
         return ProductIterator(self)
 
     def add_product(self, product: Product):
-        """Добавляет продукт в категорию, если это объект класса Product."""
-        if isinstance(product, Product):  # Проверяем, что передан объект класса Product
+        """Добавляет продукт в категорию, если это объект класса Product или его подклассов."""
+        if isinstance(product, Product):  # Проверяем, что передан объект класса Product или его подклассов
             self.__products.append(product)
             Category.product_count += 1
         else:
-            raise ValueError("Передан неверный тип. Ожидался объект класса Product.")
+            raise TypeError("Передан неверный тип. Ожидался объект класса Product.")
 
     @property
     def products(self):
@@ -57,4 +58,5 @@ class Category:
     def products_info(self):
         """Возвращает строку с информацией о продуктах в категории."""
         return "\n".join(
-            f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт." for product in self.__products)
+            f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт." for product in self.__products
+        )
