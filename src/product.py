@@ -1,4 +1,8 @@
-class Product:
+from src.base_product import BaseProduct
+from src.mixin_product import MixinProduct
+
+
+class Product(BaseProduct, MixinProduct):
     """Класс для продуктов"""
 
     name: str  # название
@@ -16,6 +20,9 @@ class Product:
         self.quantity = quantity
         self.color = color
 
+        # Вызов конструктора миксина
+        super().__init__()
+
     def __str__(self):
         """Строковое отображение для класса Product"""
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт. Цвет: {self.color}"
@@ -26,6 +33,10 @@ class Product:
             raise TypeError(f"Нельзя сложить продукты разных типов: {type(self).__name__} и {type(other).__name__}.")
 
         return (self.price * self.quantity) + (other.price * other.quantity)
+
+    def total_cost(self):
+        """Вычисление общей стоимости заказа."""
+        return self.price * self.quantity
 
     @classmethod
     def new_product(cls, product_info: dict):

@@ -1,8 +1,9 @@
+from src.base_order import BaseOrder
 from src.product import Product
 from src.product_iterator import ProductIterator
 
 
-class Category:
+class Category(BaseOrder):
     """Класс для категории"""
 
     name: str  # название
@@ -20,18 +21,12 @@ class Category:
         if __products is not None:
             Category.product_count += len(self.__products)  # Увеличиваем счетчик продуктов на количество переданных
 
+        super().__init__(name, description)
+
     def __str__(self):
         """Строковое отображение для класса Category"""
         total_quantity = len(self.__products)
         return f"{self.name}, количество продуктов: {total_quantity} шт."
-
-    # def __add__(self, other):
-    #     """Складывает стоимость всех продуктов из двух категорий."""
-    #     if isinstance(other, Category):
-    #         total_cost = sum(product.price * product.quantity for product in self.__products)
-    #         total_cost += sum(product.price * product.quantity for product in other.__products)
-    #         return total_cost
-    #     return NotImplemented
 
     def __add__(self, other):
         if not isinstance(other, Category):

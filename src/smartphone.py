@@ -20,3 +20,11 @@ class Smartphone(Product):
         return (
             super().__str__() + f", Модель: {self.model}, Производительность: {self.efficiency}, Память: {self.memory}"
         )
+
+    def __add__(self, other):
+        """Сложение"""
+        if type(other) is __class__:
+            summ = self.price + other.price
+            return summ
+        else:
+            raise TypeError

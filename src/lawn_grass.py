@@ -16,3 +16,11 @@ class LawnGrass(Product):
     def __str__(self):
         """Строковое отображение для класса LawnGrass"""
         return super().__str__() + f"Страна: {self.country}, Срок прорастания: {self.germination_period}."
+
+    def __add__(self, other):
+        """Сложение"""
+        if type(other) is __class__:
+            summ = self.price + other.price
+            return summ
+        else:
+            raise TypeError
