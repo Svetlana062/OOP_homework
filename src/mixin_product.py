@@ -1,11 +1,8 @@
 class MixinProduct:
-    """Класс-миксин, который при создании объекта распечатывает в консоль информацию
-    о том, от какого класса и с какими параметрами был создан объект."""
+    """Класс миксин для вывода в консоль информацию об объекте."""
 
-    def __init__(self, *args, **kwargs):
-        # Получаем имя класса
-        class_name = self.__class__.__name__
-        # Формируем строку с параметрами
-        params = ', '.join(f"{key}={value!r}" for key, value in kwargs.items())
-        # Печатаем информацию о создании объекта
-        print(f"Создан объект класса {class_name} с параметрами: {params}")
+    def __init__(self):
+        print(repr(self))
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity})"

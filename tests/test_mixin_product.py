@@ -1,35 +1,40 @@
-import pytest
+import sys
 from io import StringIO
-from contextlib import redirect_stdout
+
 from src.mixin_product import MixinProduct
 
 
-# Временный класс для тестирования MixinProduct
-class TestProduct(MixinProduct):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+# Предполагается, что у вас есть класс, который наследует MixinPrint
+class Product(MixinProduct):
+    def __init__(self, name, description, price, quantity, color):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.quantity = quantity
+        self.color = color
+        super().__init__()  # Вызываем конструктор MixinPrint
 
 
-# Тест для проверки вывода информации о создании объекта
-def test_mixin_product_initialization():
-    # Перенаправляем стандартный вывод в StringIO
-    f = StringIO()
-    with redirect_stdout(f):
-        product = TestProduct(name="Тестовый продукт", description="Описание", price=100.0, quantity=10,
-                              color="Красный")
+def test_mixin_print_output(mixin_product, capsys):
+    """Тест для проверки вывода информации о создании объекта."""
+    # Перенаправляем вывод в StringIO
+    captured_output = StringIO()
+    sys.stdout = captured_output
 
-    # Получаем вывод
-    output = f.getvalue().strip()
+    # Создаем новый объект, который вызовет __init__ и вывод
+    Product("Блендер", "Описание блендера", 5000, 5, "Синий")
 
-    # Проверяем, что вывод содержит ожидаемую информацию
-    assert "Создан объект класса TestProduct с параметрами:" in output
-    assert "name='Тестовый продукт'" in output
-    assert "description='Описание'" in output
-    assert "price=100.0" in output
-    assert "quantity=10" in output
-    assert "color='Красный'" in output
+    # Возвращаем вывод обратно в стандартный вывод
+    sys.stdout = sys.__stdout__
+
+    # Получаем результат вывода
+    output = captured_output.getvalue()
+
+    # Проверяем, что вывод содержит информацию о создании объекта
+    assert "Product(Блендер, Описание блендера, 5000, 5)" in output
+    assert "Миксер" not in output  # Убедимся, что не выводится предыдущий объект
 
 
-# Запуск тестов
-if __name__ == "__main__":
-    pytest.main()
+def test_product_repr(mixin_product):
+    """Тест для проверки корректности представления объекта."""
+    assert repr(mixin_product) == "Product(Миксер, Описание миксера, 3000, 10)"
