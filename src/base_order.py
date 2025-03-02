@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class BaseOrder(ABC):
     """Базовый абстрактный класс, родительский для класса Order и Category."""
 
