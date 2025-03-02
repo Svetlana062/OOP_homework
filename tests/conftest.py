@@ -2,6 +2,7 @@ import json
 
 import pytest
 
+from src.order import Order
 from src.product import Product
 
 
@@ -58,3 +59,21 @@ def mock_data():
             ],
         },
     ]
+
+
+@pytest.fixture
+def mixin_product():
+    """Фикстура для создания объекта Product с MixinPrint."""
+    return Product("Миксер", "Описание миксера", 3000, 10, "Красный")
+
+
+@pytest.fixture
+def order():
+    product = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5, "Серый")
+    return Order(product=product, quantity=2)
+
+
+@pytest.fixture
+def product():
+    """Фикстура для создания тестового продукта."""
+    return Product("Тестовый продукт", "Описание тестового продукта", 100, 5, "Красный")
