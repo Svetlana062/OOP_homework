@@ -1,8 +1,9 @@
 from src.base_order import BaseOrder
 from src.product import Product
 
+
 class Order(BaseOrder):
-    """Класс для заказа, который содержит информацию о товаре и его количестве."""
+    """Класс для заказов, который содержит информацию о товаре и его количестве."""
 
     def __init__(self, product: Product, quantity: int):
         super().__init__(name=product.name, description=product.description)
