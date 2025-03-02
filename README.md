@@ -52,10 +52,14 @@ poetry add --group dev pytest
 ## Структура проекта
 
 В модулях созданы описания основных сущностей и инициализации объектов:
-* category.py - в данном модуле создан класс Category и присвоены атрибуты (name, 
-description, products);
+* base_order.py - в данном модуле создан базовый абстрактный класс, родительский для класса Order и Category;
+* base_product.py - в данном модуле создан базовый абстрактный класс, родительский для класса Product;
+* category.py - в данном модуле создан класс Category и присвоены атрибуты (name, description, products);
 * lawn_grass.py - в данном модуле создан класс наследник класса Product: LawnGrass 
 («Трава газонная») и присвоены атрибуты (country, germination_period);
+* mixin_product.py - в данном модуле создан класс миксин для вывода в консоль информацию об объекте;
+* order.py - в данном модуле создан класс для заказов, который содержит информацию о товаре и его количестве и 
+присвоены атрибуты (product, quantity, total_price);
 * product.py - в данном модуле создан класс Product и присвоены атрибуты (name, 
 description, price, quantity, color);
 * product_iterator.py - в данном модуле создан вспомогательный класс, с помощью которого 
