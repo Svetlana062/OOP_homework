@@ -23,8 +23,12 @@ class Smartphone(Product):
 
     def __add__(self, other):
         """Сложение"""
-        if type(other) is __class__:
-            summ = self.price + other.price
+        if isinstance(other, Smartphone):
+            summ = self._Product__price + other._Product__price
             return summ
         else:
-            raise TypeError
+            raise TypeError("Можно складывать только с объектами Smartphone.")
+
+    def total_cost(self):
+        """Метод для вычисления общей стоимости смартфона."""
+        return self._Product__price * self.quantity

@@ -1,10 +1,13 @@
 import sys
+import unittest
 from io import StringIO
 from unittest.mock import patch
 
 import pytest
 
+from src.base_product import BaseProduct
 from src.lawn_grass import LawnGrass
+from src.mixin_product import MixinProduct
 from src.product import Product
 from src.smartphone import Smartphone
 
@@ -202,6 +205,17 @@ def test_mixin_print_output(mixin_product):
 def test_product_repr(mixin_product):
     """Тест для проверки корректности представления объекта."""
     assert repr(mixin_product) == "Product(Миксер, Описание миксера, 3000, 10)"
+
+
+class TestProduct(unittest.TestCase):
+
+    def test_product_is_subclass_of_base_product(self):
+        """Проверка, что Product является подклассом BaseProduct."""
+        self.assertTrue(issubclass(Product, BaseProduct))
+
+    def test_product_is_subclass_of_mixin_product(self):
+        """Проверка, что Product является подклассом MixinProduct."""
+        self.assertTrue(issubclass(Product, MixinProduct))
 
 
 if __name__ == "__main__":

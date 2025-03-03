@@ -1,5 +1,6 @@
 import unittest
 
+from src.product import Product
 from src.smartphone import Smartphone
 
 
@@ -48,6 +49,19 @@ class TestSmartphone(unittest.TestCase):
         self.assertEqual(self.smartphone.quantity, 5)
         self.smartphone.quantity = 10
         self.assertEqual(self.smartphone.quantity, 10)
+
+    def test_smartphone_is_subclass_of_product(self):
+        """Проверка, что Smartphone является подклассом Product."""
+        self.assertTrue(issubclass(Smartphone, Product))
+
+    def test_smartphone_instance(self):
+        """Проверка, что экземпляр Smartphone является экземпляром Product."""
+        self.assertIsInstance(self.smartphone, Product)
+
+    def test_total_cost(self):
+        """Проверка, что метод total_cost возвращает правильное значение."""
+        expected_cost = 180000.0 * 5  # Ожидаемая стоимость
+        self.assertEqual(self.smartphone.total_cost(), expected_cost)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import unittest
 
 from src.lawn_grass import LawnGrass
+from src.product import Product
 
 
 class TestLawnGrass(unittest.TestCase):
@@ -26,6 +27,7 @@ class TestLawnGrass(unittest.TestCase):
         self.assertEqual(self.lawn_grass.country, "Россия")
         self.assertEqual(self.lawn_grass.germination_period, "7 дней")
         self.assertEqual(self.lawn_grass.color, "Зеленый")
+        assert issubclass(LawnGrass, Product)  # Проверка, что LawnGrass является подклассом Product
 
     def test_str_method(self):
         """Тестирование строкового представления объекта LawnGrass."""
@@ -45,6 +47,19 @@ class TestLawnGrass(unittest.TestCase):
         self.assertEqual(self.lawn_grass.germination_period, "7 дней")
         self.lawn_grass.germination_period = "10 дней"
         self.assertEqual(self.lawn_grass.germination_period, "10 дней")
+
+    def test_lawn_grass_is_subclass_of_product(self):
+        """Проверка, что LawnGrass является подклассом Product."""
+        self.assertTrue(issubclass(LawnGrass, Product))
+
+    def test_lawn_grass_instance(self):
+        """Проверка, что экземпляр LawnGrass является экземпляром Product."""
+        self.assertIsInstance(self.lawn_grass, Product)
+
+    def test_total_cost(self):
+        """Проверка, что метод total_cost возвращает правильное значение."""
+        expected_cost = self.lawn_grass.price * self.lawn_grass.quantity  # Ожидаемая стоимость
+        self.assertEqual(self.lawn_grass.total_cost(), expected_cost)
 
 
 if __name__ == "__main__":

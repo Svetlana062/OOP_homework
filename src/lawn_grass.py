@@ -19,8 +19,12 @@ class LawnGrass(Product):
 
     def __add__(self, other):
         """Сложение"""
-        if type(other) is __class__:
-            summ = self.price + other.price
+        if isinstance(other, LawnGrass):
+            summ = self._Product__price + other._Product__price  # Используем защищенный атрибут
             return summ
         else:
-            raise TypeError
+            raise TypeError("Можно складывать только с объектами LawnGrass.")
+
+    def total_cost(self):
+        """Метод для вычисления общей стоимости газонной травы."""
+        return self._Product__price * self.quantity
