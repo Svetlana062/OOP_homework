@@ -81,3 +81,19 @@ class Category(BaseOrder):
         return "\n".join(
             f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт." for product in self.__products
         )
+
+    def middle_price(self):
+        """Метод, который подсчитывает средний ценник всех товаров."""
+        try:
+            if not self.__products:  # если список товаров пуст
+                return 0
+            total_price = sum(product.price * product.quantity for product in self.__products)
+            total_quantity = sum(product.quantity for product in self.__products)
+
+            if total_quantity == 0:  # Если общее количество товаров равно 0, возвращаем 0
+                return 0
+
+            return total_price / total_quantity
+
+        except ZeroDivisionError:  # если произойдет деление на 0, возвращаем 0
+            return 0

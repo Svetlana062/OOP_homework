@@ -1,5 +1,7 @@
 import unittest
 
+import pytest
+
 from src.category import Category
 from src.product import Product
 
@@ -103,6 +105,23 @@ class TestCategoryAddition(unittest.TestCase):
         total_cost = self.category_a + empty_category  # Ожидается стоимость из category_a
         expected_cost = 50000 * 10 + 60000 * 5
         self.assertEqual(total_cost, expected_cost)
+
+
+def test_middle_price_with_products(category_with_products):
+    """Тестируем middle_price с продуктами."""
+    expected_average = (100.0 * 5 + 200.0 * 3) / (5 + 3)
+    assert category_with_products.middle_price() == pytest.approx(expected_average)
+
+
+def test_middle_price_empty_category(empty_category):
+    """Тестируем middle_price с пустой категорией."""
+    assert empty_category.middle_price() == 0
+
+
+def test_middle_price_no_products():
+    """Тестируем middle_price с категорией без продуктов."""
+    category_no_products = Category("Пустая категория 2", "Описание пустой категории 2")
+    assert category_no_products.middle_price() == 0
 
 
 if __name__ == "__main__":
