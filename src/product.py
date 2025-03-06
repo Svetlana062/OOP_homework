@@ -17,8 +17,13 @@ class Product(BaseProduct, MixinProduct):
         self.name = name
         self.description = description
         self.__price = price  # Приватный атрибут для цены
-        self.quantity = quantity
         self.color = color
+
+        # если пользователь создает товар с нулевым количеством, вызываем исключение
+        if quantity <= 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
+        else:
+            self.quantity = quantity
 
         # Вызов конструктора миксина
         super().__init__()

@@ -217,6 +217,13 @@ class TestProduct(unittest.TestCase):
         """Проверка, что Product является подклассом MixinProduct."""
         self.assertTrue(issubclass(Product, MixinProduct))
 
+    def test_initialization_with_zero_quantity(self):
+        """Тест на то, если пользователь попытается создать экземпляр класса Product с нулевым или
+        отрицательным количеством"""
+        with self.assertRaises(ValueError) as context:
+            Product("Товар", "Описание товара", 100.0, 0, "Красный")
+        self.assertEqual(str(context.exception), "Товар с нулевым количеством не может быть добавлен")
+
 
 if __name__ == "__main__":
     pytest.main()
