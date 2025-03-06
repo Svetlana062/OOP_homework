@@ -2,6 +2,7 @@ import json
 
 import pytest
 
+from src.category import Category
 from src.order import Order
 from src.product import Product
 
@@ -77,3 +78,18 @@ def order():
 def product():
     """Фикстура для создания тестового продукта."""
     return Product("Тестовый продукт", "Описание тестового продукта", 100, 5, "Красный")
+
+
+@pytest.fixture
+def category_with_products():
+    """Фикстура для создания категории с несколькими продуктами."""
+    category = Category("Категория с продуктами", "Описание категории")
+    category.add_product(Product("Продукт 1", "Описание 1", 100.0, 5, "Красный"))
+    category.add_product(Product("Продукт 2", "Описание 2", 200.0, 3, "Синий"))
+    return category
+
+
+@pytest.fixture
+def empty_category():
+    """Фикстура для создания пустой категории."""
+    return Category("Пустая категория", "Описание пустой категории")
